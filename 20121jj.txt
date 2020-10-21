@@ -1,0 +1,52 @@
+파일 이름 학번_이름 
+20121 전제
+정답
+1. 12개
+2. 
+	a1 유통
+	a2 기획
+	a3 유통
+	a4 총무
+	a6 영업 
+3.
+	SELECT e.employee_id , e.first_name , 
+	d.department_id , 
+    	l.city
+    	FROM employees e, departments d, locations l
+    	WHERE e.department_id = d.department_id
+    	AND d.location_id = l.location_id;
+4. 
+	select department_name, city 
+	from departments d, locations l 
+	where department_name in('Finance', 'Accounting', 'IT Support') 
+	and d.location_id = l.location_id;
+5.
+	SELECT employee_id 사원번호, first_name 이름, 
+	department_id 부서번호, department_name 부서명
+	FROM employees
+	JOIN departments USING (department_id);
+6.
+	select e.last_name, j.job_id, j.job_title, j.max_salary 
+	from employees e, jobs j 
+	where e.job_id = j.job_id 
+	and j.max_salary > 15000;
+7.
+	SELECT A.employee_id 사원번호, A.first_name 사원명, B.employee_id 상사번호, B.first_name 상사명
+    	FROM employees A
+    	JOIN employees B ON A.manager_id = B.employee_id
+    	WHERE A.department_id between 100 and 120
+    	order by A.employee_id asc;
+8.
+	select A.employee_id 사원번호1, B.employee_id 사원번호2, A.first_name 이름1, B.first_name 이름2 
+	from employees A
+	JOIN employees B ON A.first_name = B.first_name and A.employee_id != B.employee_id
+	ORDER BY A.first_name desc;
+9.
+	select department_name, city, country_name 
+	from countries
+	join locations using (country_id)
+	join departments using (location_id)
+	where country_name like 'Ca%';
+10.
+	select department_name from departments d, employees e
+	where d.department_id > e.department_id;
