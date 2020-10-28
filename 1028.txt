@@ -1,0 +1,41 @@
+SELECT employee_id, first_name
+FROM employees
+WHERE department_id = (SELECT department_id
+FROM departments
+WHERE department_name='IT');
+
+
+SELECT employee_id, first_name
+FROM employees A
+JOIN departments B ON A.department_id = B.department_id
+AND department_name='IT';
+
+select first_name, salary from employees A
+where A.salary IN (select min(salary) from employees group by department_id) order by A.salary desc;
+
+select min(salary)
+from employees 
+group by department_id 
+order by min(salary) desc;
+
+SELECT employee_id, first_name, salary, department_id
+FROM employees WHERE manager_id IN (SELECT manager_id
+FROM employees WHERE department_id='20')
+AND department_id <> '20';
+
+SELECT employee_id, last_name, job_id, salary
+FROM employees WHERE salary < ANY (SELECT salary
+FROM employees WHERE job_id='ST_MAN');
+
+SELECT employee_id, last_name, job_id, salary
+FROM employees WHERE salary < ALL (SELECT salary
+FROM employees WHERE job_id='ST_MAN')
+AND job_id <> 'ST_MAN';
+
+select first_name, salary, department_id from employees
+where department_id in  (select DISTINCT department_id from employees where salary >= 10000);
+
+select * from employees A
+where (A.job_id, A.salary)IN(
+    select job_id, min(salary) from employees group by job_id
+) order by a.salary desc;
