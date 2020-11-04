@@ -1,0 +1,31 @@
+SELECT employee_id, last_name, job_id, salary
+FROM employees WHERE (manager_id, job_id) IN (SELECT manager_id, job_id
+FROM employees WHERE first_name='Bruce')
+AND first_name <> 'Bruce'; 
+
+SELECT employee_id, last_name, job_id, salary
+FROM employees WHERE salary < ANY (SELECT salary
+FROM employees WHERE job_id='ST_MAN');
+
+SELECT department_id, employee_id, first_name, salary
+FROM employees A
+WHERE ( A.department_id, A.salary) IN
+(SELECT department_id, MIN(salary)
+FROM employees GROUP BY department_id)
+ORDER BY A.salary DESC;
+
+select * from employees A
+where (A.job_id, A.salary)in(select job_id,min(salary) from employees group by job_id)
+order by A.salary desc;
+
+select * from employees A
+where (A.manager_id, A.salary)in(select manager_id,max(salary) from employees group by manager_id)
+order by A.salary desc;
+
+SELECT department_name
+FROM departments d
+WHERE EXISTS (SELECT 1 FROM employees WHERE department_id = d.department_id);
+
+SELECT department_name
+FROM departments d
+WHERE NOT EXISTS (SELECT 1 FROM employees WHERE department_id = d.department_id);
