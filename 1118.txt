@@ -1,0 +1,45 @@
+select department_name
+from departments d 
+where exists
+(select 1 from employees where department_id = d.department_id);
+
+select 1 from employees where employee_id >= 200;
+
+select department_name from departments d where not exists (select 1 from employees where department_id = d.department_id);
+
+select first_name, hire_date 
+from employees 
+where department_id in 
+(select department_id from employees where first_name = 'Bruce')
+AND first_name <> 'Bruce';
+
+select first_name , salary from employees where salary > (select salary  from employees where first_name = 'Bruce');
+
+select department_id , count(department_id) from employees group by departmnet_id 
+having count(department_id ) = (select max(count(department_id)) from employees group by department_id);
+
+SELECT first_name,department_id,city
+FROM employees
+JOIN departments USING (department_id)
+JOIN locations USING (location_id)
+WHERE salary =(SELECT MIN(salary) FROM employees);
+
+SELECT first_name,salary
+FROM employees
+WHERE department_id = (SELECT department_id FRom employees WHERE first_name = 'Daniel' )
+AND salary < (SELECT salary FRom employees WHERE first_name = 'jack' );
+
+SELECT first_name,hire_date
+FROM employees
+WHERE department_id = (SELECT department_id FROM departments WHERE departments='Shipping')
+AND TO_CHAR(hire_date,'yyyy')='2007';
+
+SELECT first_name,department_id,city
+FROM employees
+JOIN departments USING (department_id)
+JOIN locations USING (location_id)
+WHERE salary =(SELECT MIN(salary) FROM employees);
+
+select first_name, employee_id, salary 
+from employees 
+where salary = (select salary from employees where first_name like 'Allen') and first_name <> 'Allen';
