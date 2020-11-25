@@ -1,0 +1,23 @@
+desc newcustomer;
+desc employees;
+select * from newcustomer;
+
+select * from book;
+insert into book(bookid, bookname, piblisher) values(1, '오늘도즐겁게, '분당출판사');
+select * from book;
+
+insert into book(bookid, bookname, publisher, price) values(3, '영현아 놀자',  null, 35000);
+select * from book;
+
+insert into book(bookid, bookname) values(4, '상언이도 같이 놀자');
+
+insert into book(bookid, bookname) values(5, '123');
+
+delete book where bookid = 5;
+
+select * from book;
+rollback
+
+commit;
+
+delete book where bookid = 5;
